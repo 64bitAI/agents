@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+"""
+Compare multiple agents' analysis on the same query
+Usage: /compare agent1 agent2 "query"
+       /compare all "query"
+
+---
+description: Compare multiple agents' perspectives on the same query
+---
+"""
+
+import sys
+import json
+from datetime import datetime
+from pathlib import Path
+
+def main():
+    if len(sys.argv) < 3:
+        print("Usage: /compare agent1 agent2 \"query\"")
+        print("       /compare all \"query\"")
+        sys.exit(1)
+    
+    # Parse arguments
+    if sys.argv[1] == "all":
+        agents = ["risk", "technicals", "fundamentals", "quant", "sentiment"]
+        query = sys.argv[2]
+    else:
+        agents = sys.argv[1:-1]  # All args except the last (query)
+        query = sys.argv[-1]
+    
+    print(f"🔍 Comparing Agent Perspectives")
+    print(f"Query: {query}")
+    print(f"Agents: {', '.join(agents)}")
+    print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M ET')}")
+    print("=" * 60)
+    
+    results = {}
+    
+    for agent in agents:
+        print(f"\n📊 {agent.upper()} Analysis:")
+        print("-" * 30)
+        
+        # Use the Task tool to invoke the agent
+        print(f"Use agent {agent} to analyze: {query}")
+        print("")
+        print("Context:")
+        print("- Provide your analysis of the above query")
+        print("- Reference current portfolio and market conditions")
+        print("- Include your specialized perspective")
+        print("- Note any risks or opportunities you identify")
+        print("")
+        
+        # Note: In a real implementation, you'd capture the agent response
+        # and store it in results[agent] for comparison
+        
+    # Summary comparison (would be implemented with actual agent responses)
+    print(f"\n🎯 COMPARISON SUMMARY")
+    print("=" * 30)
+    print(f"Query: {query}")
+    print(f"Agents Consulted: {len(agents)}")
+    print("")
+    print("Key Themes:")
+    print("- [Would extract common themes from responses]")
+    print("- [Would identify areas of agreement]")
+    print("- [Would highlight disagreements]")
+    print("")
+    print("Recommended Action:")
+    print("- [Would synthesize recommendations]")
+    print("")
+    print("💡 Use /portfolio to discuss these findings with the PM")
+
+if __name__ == "__main__":
+    main()

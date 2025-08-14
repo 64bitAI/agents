@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Cross-platform desktop notification hook for Claude Code
+# Supports macOS, Windows (WSL/Git Bash/PowerShell), and Linux
+
+# Read JSON input from stdin
+input=$(cat)
+
+# Extract the message from JSON input
+message=$(echo "$input" | grep -o '"message":"[^"]*"' | sed 's/"message":"//; s/"$//')
+
+# If message is empty, use a default
+if [ -z "$message" ]; then
+    message="Claude Code notification"
+fi
+
+# Detect platform and send notification
+case "$(uname -s)" in
+    Darwin*)
+        # macOS - use osascript
+        osascript -e "display notification \"$message\" with title \"Claude Code\"" 2>/dev/null
+        ;;
+    Linux*)
+        # Linux - use notify-send if available
+        if command -v notify-send >/dev/null 2>&1; then
+            notify-send "Claude Code" "$message" 2>/dev/null
+        else
+            echo "notify-send not available on this Linux system" >&2
+        fi
+        ;;
+    CYGWIN*|MINGW*|MSYS*)
+        # Windows Git Bash/MSYS2 - use PowerShell
+        powershell.exe -Command "try { Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show('$message', 'Claude Code', 'OK', 'Information') } catch { Write-Host 'Notification failed' }" 2>/dev/null
+        ;;
+    *)
+        # Unknown platform - try WSL detection
+        if grep -qEi "(Microsoft|WSL)" /proc/version 2>/dev/null; then
+            # WSL - use Windows PowerShell
+            powershell.exe -Command "try { Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show('$message', 'Claude Code', 'OK', 'Information') } catch { Write-Host 'Notification failed' }" 2>/dev/null
+        else
+            echo "Unsupported platform for notifications: $(uname -s)" >&2
+            exit 1
+        fi
+        ;;
+esac
+
+exit 0

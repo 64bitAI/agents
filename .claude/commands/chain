@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""
+Chain agents together, passing output from origin to target
+Usage: /chain origin target "query"
+
+---
+description: Chain agents together, passing output from origin to target
+---
+"""
+
+import sys
+import json
+import time
+from datetime import datetime
+from pathlib import Path
+
+class AgentChain:
+    def __init__(self):
+        self.claude_dir = Path(".claude")
+        self.valid_agents = ["risk", "trader", "technicals", "fundamentals", "quant", "sentiment", "portfolio"]
+    
+    def validate_agents(self, agents):
+        """Validate that requested agents exist"""
+        for agent in agents:
+            if agent not in self.valid_agents:
+                print(f"❌ Error: Unknown agent '{agent}'")
+                print(f"Valid agents: {', '.join(self.valid_agents)}")
+                return False
+        return True
+    
+    def save_chain_context(self, origin_agent, target_agent, query, origin_output):
+        """Save chain context for debugging"""
+        chain_dir = self.claude_dir / "temp" / "chains"
+        chain_dir.mkdir(parents=True, exist_ok=True)
+        
+        chain_id = f"{origin_agent}_{target_agent}_{int(time.time())}"
+        context = {
+            "chain_id": chain_id,
+            "timestamp": datetime.now().isoformat(),
+            "origin_agent": origin_agent,
+            "target_agent": target_agent,
+            "original_query": query,
+            "origin_output": origin_output
+        }
+        
+        with open(chain_dir / f"{chain_id}.json", 'w') as f:
+            json.dump(context, f, indent=2)
+        
+        return chain_id
+    
+    def execute_chain(self, origin, target, query):
+        """Execute agent chain"""
+        print(f"🔗 Agent Chain: {origin} → {target}")
+        print(f"Query: {query}")
+        print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M ET')}")
+        print("=" * 60)
+        
+        # Step 1: Run origin agent
+        print(f"\n📊 Step 1: {origin.upper()} Analysis")
+        print("-" * 40)
+        print(f"Use agent {origin} to analyze: {query}")
+        print("")
+        print("Context:")
+        print("- Provide your initial analysis of the query")
+        print("- Reference current portfolio and market conditions") 
+        print("- Include your specialized perspective")
+        print("- Use structured markdown output format")
+        print("")
+        print("[ORIGIN AGENT OUTPUT WOULD APPEAR HERE]")
+        
+        # In a real implementation, you'd capture the actual agent output
+        mock_origin_output = f"""
+---
+agent: {origin}
+timestamp: {datetime.now().isoformat()}
+period: intraday
+priority: medium
+---
+
+# {origin.title()} Analysis: {query}
+
+## Key Findings
+- Analysis from {origin} perspective
+- Relevant metrics and observations
+- Risk/opportunity identification
+
+## Recommendations
+- Specific actionable insights
+- Considerations for other agents
+        """
+        
+        # Step 2: Pass to target agent
+        print(f"\n🎯 Step 2: {target.upper()} Analysis")
+        print("-" * 40)
+        print(f"Use agent {target} to build on the {origin} analysis.")
+        print("")
+        print("Context:")
+        print(f"- Original query: {query}")
+        print(f"- Previous analysis from {origin} agent:")
+        print(f"  {mock_origin_output.strip()}")
+        print("")
+        print("Instructions:")
+        print(f"- Review the {origin} agent's analysis above")
+        print("- Add your specialized perspective")
+        print("- Note areas of agreement or disagreement")
+        print("- Provide combined insights and recommendations")
+        print("- Use structured markdown output format")
+        print("")
+        
+        # Save chain context
+        chain_id = self.save_chain_context(origin, target, query, mock_origin_output)
+        
+        print(f"\n✅ Chain Complete: {origin} → {target}")
+        print(f"Chain ID: {chain_id}")
+        print(f"Context saved to: .claude/temp/chains/{chain_id}.json")
+        print("")
+        print("💡 Next steps:")
+        print("  - Review both agent perspectives")
+        print("  - Use /portfolio to discuss findings with PM")
+        print("  - Consider additional agent consultation if needed")
+
+def main():
+    if len(sys.argv) < 4:
+        print("Usage: /chain origin target \"query\"")
+        print("")
+        print("Examples:")
+        print("  /chain risk technicals \"NVDA position analysis\"")
+        print("  /chain sentiment fundamentals \"AAPL earnings reaction\"")
+        print("  /chain technicals risk \"breakout trade sizing\"")
+        print("")
+        print("Available agents:")
+        print("  risk, trader, technicals, fundamentals, quant, sentiment, portfolio")
+        sys.exit(1)
+    
+    origin = sys.argv[1].lower()
+    target = sys.argv[2].lower()
+    query = sys.argv[3]
+    
+    chain = AgentChain()
+    
+    # Validate agents
+    if not chain.validate_agents([origin, target]):
+        sys.exit(1)
+    
+    if origin == target:
+        print("❌ Error: Origin and target agents cannot be the same")
+        sys.exit(1)
+    
+    # Execute chain
+    chain.execute_chain(origin, target, query)
+
+if __name__ == "__main__":
+    main()

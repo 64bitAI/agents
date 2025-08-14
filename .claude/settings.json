@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "write": "ask-if-multi",
+    "bash": "ask-for-commands",
+    "edit": "allow"
+  },
+  "hooks": {
+    "SubagentStop": {
+      "matchers": ["*"],
+      "command": ".claude/hooks/agent-orchestrator"
+    },
+    "PostToolUse": {
+      "Write": ".claude/hooks/report-monitor",
+      "Edit": ".claude/hooks/report-monitor"
+    },
+    "UserPromptSubmit": {
+      "command": ".claude/hooks/route-to-agent"
+    },
+    "Notification": ".claude/hooks/Notification"
+  },
+  "environmentVariables": {
+    "HEDGE_FUND_MODE": "active",
+    "REPORT_FORMAT": "markdown",
+    "PORTFOLIO_SIZE": "50000000",
+    "FUND_NAME": "64bit Capital",
+    "RISK_TOLERANCE": "moderate"
+  },
+  "development": {
+    "test_data_directory": ".claude/test_data/",
+    "debug_output": ".claude/debug/",
+    "mock_mode": false
+  }
+}

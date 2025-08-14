@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""
+Display all active alerts across agents
+
+---
+description: Display all active alerts across agents
+---
+"""
+
+import re
+import time
+from datetime import datetime
+from pathlib import Path
+
+class AlertsManager:
+    def __init__(self):
+        self.claude_dir = Path(".claude")
+        self.agents = ["risk", "trader", "technicals", "fundamentals", "quant", "sentiment", "portfolio"]
+    
+    def display_alerts(self):
+        """Display active alerts dashboard"""
+        print("🚨 Active Alerts Dashboard")
+        print("Generated: " + datetime.now().strftime('%Y-%m-%d %H:%M ET'))
+        print("==========================")
+        print()
+        
+        # Check if alerts file exists
+        alerts_file = self.claude_dir / "alerts" / "active.md"
+        if not alerts_file.exists():
+            print("No alerts file found. Run /morning to initialize.")
+            return
+        
+        # Display current alerts
+        with open(alerts_file, 'r') as f:
+            content = f.read()
+        
+        print(content)
+        print()
+        
+        print("📊 Recent Agent Activity")
+        print("------------------------")
+        
+        # Show last update from each agent
+        for agent in self.agents:
+            report_file = self.claude_dir / "reports" / agent / "latest.md"
+            
+            if report_file.exists():
+                try:
+                    with open(report_file, 'r') as f:
+                        report_content = f.read()
+                    
+                    timestamp_match = re.search(r'timestamp:\s*([^\n]+)', report_content)
+                    priority_match = re.search(r'priority:\s*([^\n]+)', report_content)
+                    
+                    timestamp = timestamp_match.group(1).strip() if timestamp_match else "unknown"
+                    priority = priority_match.group(1).strip() if priority_match else "unknown"
+                    
+                    print(f"  {agent}: {timestamp} (priority: {priority})")
+                    
+                except Exception:
+                    print(f"  {agent}: Error reading report")
+            else:
+                print(f"  {agent}: No recent reports")
+        
+        print()
+        print("💡 Quick Actions:")
+        print("  /status        - Detailed agent status")
+        print("  /statusline    - Rotating status line")
+        print("  /portfolio     - Chat with Portfolio Manager")
+        print("  /risk          - Check risk metrics") 
+        print("  /morning       - Run morning brief")
+
+def main():
+    manager = AlertsManager()
+    manager.display_alerts()
+
+if __name__ == "__main__":
+    main()

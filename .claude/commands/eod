@@ -1,0 +1,75 @@
+#!/bin/bash
+---
+description: Execute end-of-day review sequence - P&L attribution, risk review, next-day prep
+---
+
+echo "🌆 Starting End-of-Day Review..."
+echo "Time: $(date '+%Y-%m-%d %H:%M ET')"
+echo ""
+
+# Set market session
+echo "post-market" > .claude/context/market_session
+
+echo "💰 Step 1/6: P&L and Performance Review..."
+Use agent portfolio to provide end-of-day P&L review.
+
+Context:
+- Analyze today's P&L by position and sector
+- Review performance vs benchmark and targets
+- Assess quality of returns (alpha vs beta)
+- Identify top contributors and detractors
+
+echo ""
+echo "⚖️ Step 2/6: Risk Assessment Update..."
+Use agent risk to provide end-of-day risk review.
+
+Context:
+- Update VaR and risk metrics with closing prices
+- Review any risk limit breaches today
+- Assess portfolio changes impact on risk
+- Prepare risk report for tomorrow
+
+echo ""
+echo "📊 Step 3/6: Technical Analysis Review..."
+Use agent technicals to provide end-of-day technical review.
+
+Context:
+- Review how key levels performed today
+- Assess technical signal accuracy 
+- Update support/resistance for tomorrow
+- Identify any new setups developing
+
+echo ""
+echo "📋 Step 4/6: Fundamental Events Recap..."
+Use agent fundamentals to provide fundamental events summary.
+
+Context:
+- Review any fundamental developments today
+- Assess impact on our thesis for each position
+- Update catalyst calendar for upcoming events
+- Identify any thesis changes needed
+
+echo ""
+echo "🔢 Step 5/6: Quantitative Attribution..."
+Use agent quant to provide quantitative performance attribution.
+
+Context:
+- Break down returns by factor exposure
+- Review signal performance today
+- Update model parameters if needed
+- Assess factor regime changes
+
+echo ""
+echo "📈 Step 6/6: Portfolio Strategy Review..."
+Use agent portfolio to synthesize EOD review and plan tomorrow.
+
+Context:
+- Consolidate all agent inputs from EOD review
+- Assess overall fund performance and positioning
+- Set priorities for tomorrow
+- Update investor communication materials
+
+echo ""
+echo "✅ End-of-Day Review Complete"
+echo "Reports saved to .claude/reports/eod/$(date +%Y%m%d).md"
+echo "Use /alerts to review any overnight alerts"

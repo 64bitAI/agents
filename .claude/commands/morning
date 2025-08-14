@@ -1,0 +1,81 @@
+#!/bin/bash
+---
+description: Execute morning brief sequence - Risk → Fundamentals → Technicals → Quant → Sentiment → PM
+---
+
+echo "🌅 Starting Morning Brief Sequence..."
+echo "Time: $(date '+%Y-%m-%d %H:%M ET')"
+echo ""
+
+# Set market session
+echo "pre-market" > .claude/context/market_session
+
+echo "📊 Step 1/6: Risk Manager Assessment..."
+# Invoke risk agent with morning brief context
+Use agent risk to provide morning risk assessment.
+
+Context:
+- Review overnight portfolio changes
+- Check margin and exposure limits  
+- Assess any overnight market moves impact
+- Identify key risk factors for the day
+
+echo ""
+echo "📈 Step 2/6: Fundamental Analysis Update..."
+# Invoke fundamentals agent
+Use agent fundamentals to provide morning fundamental update.
+
+Context:  
+- Scan overnight news affecting our positions
+- Review any earnings or catalyst updates
+- Check analyst recommendations changes
+- Identify fundamental themes for the day
+
+echo ""
+echo "📉 Step 3/6: Technical Analysis Setup..."
+# Invoke technicals agent
+Use agent technicals to provide morning technical setup.
+
+Context:
+- Identify key support/resistance levels
+- Scan for breakout setups in our watchlist
+- Review overnight futures action impact
+- Set technical alerts for the day
+
+echo ""
+echo "🔢 Step 4/6: Quantitative Signals..."
+# Invoke quant agent  
+Use agent quant to provide morning quantitative update.
+
+Context:
+- Update factor model signals
+- Review momentum and mean reversion signals
+- Check correlation and volatility regime
+- Validate current positioning vs signals
+
+echo ""
+echo "📱 Step 5/6: Sentiment Analysis..."
+# Invoke sentiment agent
+Use agent sentiment to provide morning sentiment reading.
+
+Context:
+- Scan social media sentiment on our positions
+- Review news flow sentiment
+- Check options flow and positioning data
+- Identify sentiment-driven opportunities/risks
+
+echo ""
+echo "🎯 Step 6/6: Portfolio Manager Synthesis..."
+# Invoke portfolio agent with all contexts
+Use agent portfolio to synthesize morning brief and set trading plan.
+
+Context:
+- Review all agent inputs from morning brief
+- Set day's trading priorities and risk budget
+- Identify key decisions needed today
+- Communicate plan to trading desk
+
+echo ""
+echo "✅ Morning Brief Complete"
+echo "Use /alerts to view active alerts"
+echo "Use /status to check all agent status"

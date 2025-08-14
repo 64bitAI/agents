@@ -1,0 +1,28 @@
+# Temporary files
+.claude/temp/
+.claude/cache/
+.claude/debug/
+.claude/sandbox/
+
+# Session logs
+.claude/sessions/
+
+# Real trading data (if any)
+.claude/data/live/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Private keys or sensitive config
+.env
+secrets.*

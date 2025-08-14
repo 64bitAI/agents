@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""
+Show detailed status dashboard for all agents
+
+---
+description: Show detailed status dashboard for all agents
+---
+"""
+
+import os
+import re
+import time
+from datetime import datetime
+from pathlib import Path
+
+class StatusDashboard:
+    def __init__(self):
+        self.claude_dir = Path(".claude")
+        self.agents = ["portfolio", "risk", "trader", "technicals", "fundamentals", "quant", "sentiment"]
+        self.agent_colors = {
+            "portfolio": "🎯",
+            "risk": "⚖️", 
+            "trader": "💱",
+            "technicals": "📈",
+            "fundamentals": "📊", 
+            "quant": "🔢",
+            "sentiment": "📱"
+        }
+    
+    def get_market_session(self):
+        """Get current market session"""
+        try:
+            with open(self.claude_dir / "context" / "market_session", 'r') as f:
+                return f.read().strip()
+        except FileNotFoundError:
+            return "unknown"
+    
+    def get_portfolio_summary(self):
+        """Extract portfolio summary"""
+        try:
+            with open(self.claude_dir / "context" / "portfolio_state.md", 'r') as f:
+                content = f.read()
+            
+            nav_match = re.search(r'Total NAV.*?\$([0-9.]+M)', content)
+            pnl_match = re.search(r'Day P&L.*?\+?\$([0-9.]+K)', content)
+            
+            nav = nav_match.group(1) if nav_match else "N/A"
+            pnl = pnl_match.group(1) if pnl_match else "N/A"
+            
+            return f"NAV ${nav}, Day P&L ${pnl}"
+        except FileNotFoundError:
+            return "No data available"
+    
+    def get_agent_status(self, agent):
+        """Get status for a specific agent"""
+        report_path = self.claude_dir / "reports" / agent / "latest.md"
+        
+        if not report_path.exists():
+            return {
+                'timestamp': 'unknown',
+                'priority': 'unknown', 
+                'period': 'unknown',
+                'alerts': 0,
+                'status': 'Inactive'
+            }
+        
+        try:
+            with open(report_path, 'r') as f:
+                content = f.read()
+            
+            # Extract metadata from YAML frontmatter
+            timestamp_match = re.search(r'timestamp:\s*([^\n]+)', content)
+            priority_match = re.search(r'priority:\s*([^\n]+)', content)  
+            period_match = re.search(r'period:\s*([^\n]+)', content)
+            
+            # Count alerts
+            alerts = content.count('🚨') + content.count('⚠️')
+            
+            return {
+                'timestamp': timestamp_match.group(1).strip() if timestamp_match else 'unknown',
+                'priority': priority_match.group(1).strip() if priority_match else 'unknown',
+                'period': period_match.group(1).strip() if period_match else 'unknown', 
+                'alerts': alerts,
+                'status': 'Active'
+            }
+        except Exception as e:
+            return {
+                'timestamp': 'error',
+                'priority': 'error',
+                'period': 'error', 
+                'alerts': 0,
+                'status': 'Error reading report'
+            }
+    
+    def count_test_suites(self, agent):
+        """Count available test suites for an agent"""
+        test_dir = self.claude_dir / "tests" / agent
+        if not test_dir.exists():
+            return 0
+        
+        return len([f for f in test_dir.glob("*.py")] + [f for f in test_dir.glob("*.sh")])
+    
+    def display_dashboard(self):
+        """Display the complete status dashboard"""
+        print("📊 Agent Status Dashboard")
+        print("=========================")
+        print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M ET')}")
+        print()
+        
+        # Market session
+        session = self.get_market_session()
+        print(f"🕒 Market Session: {session}")
+        print()
+        
+        # Portfolio summary  
+        portfolio_summary = self.get_portfolio_summary()
+        print(f"💰 Portfolio: {portfolio_summary}")
+        print()
+        
+        print("🤖 Agent Status Summary")
+        print("------------------------")
+        
+        for agent in self.agents:
+            color = self.agent_colors.get(agent, "🔸")
+            status = self.get_agent_status(agent)
+            
+            print(f"{color} {agent}")
+            print(f"   Last Update: {status['timestamp']}")
+            print(f"   Priority: {status['priority']}")
+            print(f"   Period: {status['period']}")
+            
+            if status['alerts'] > 0:
+                print(f"   ⚠️  {status['alerts']} active alerts")
+            else:
+                print("   ✅ No alerts")
+            print()
+        
+        # Development status
+        print("🧪 Development Status")  
+        print("--------------------")
+        for agent in self.agents:
+            test_count = self.count_test_suites(agent)
+            print(f"  {agent}: {test_count} test suites available")
+        
+        print()
+        print("💡 Available Commands:")
+        print("  /morning       - Run morning brief")
+        print("  /eod           - End-of-day review") 
+        print("  /alerts        - View active alerts")
+        print("  /statusline    - Rotating status line")
+        print("  /portfolio     - Chat with PM")
+        print("  /[agent]       - Chat with specific agent")
+        print("  /compare [agents] \"query\" - Compare agent views")
+        print("  /chain [from] [to] \"query\" - Chain agents")
+
+def main():
+    dashboard = StatusDashboard()
+    dashboard.display_dashboard()
+
+if __name__ == "__main__":
+    main()
