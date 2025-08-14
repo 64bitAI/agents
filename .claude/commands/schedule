@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""
+Manage cross-platform trading schedule automation
+
+---
+description: Manage trading schedule automation (cron/Task Scheduler)
+---
+"""
+
+import sys
+import subprocess
+from pathlib import Path
+
+def main():
+    scheduler_path = Path(".claude/scheduler/scheduler.py")
+    
+    if not scheduler_path.exists():
+        print("❌ Scheduler not found. Repository may be incomplete.")
+        return
+    
+    # Pass all arguments to the scheduler
+    args = sys.argv[1:] if len(sys.argv) > 1 else []
+    
+    try:
+        subprocess.run([sys.executable, str(scheduler_path)] + args, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Scheduler error: {e}")
+    except FileNotFoundError:
+        print("❌ Python not found in PATH")
+
+if __name__ == "__main__":
+    main()
