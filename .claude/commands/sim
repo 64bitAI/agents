@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""
+Quick trading simulation launcher - uses Task tool with live data
+
+---
+description: Launch realistic trading simulations with live market data
+---
+"""
+
+import sys
+import time
+from datetime import datetime
+from pathlib import Path
+
+def log_event(message, level="INFO"):
+    """Log simulation events"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"{timestamp} - {level} - {message}"
+    print(log_entry)
+    
+    # Also log to file
+    log_file = Path(".claude/logs/simulation.log")
+    log_file.parent.mkdir(exist_ok=True)
+    with open(log_file, "a") as f:
+        f.write(log_entry + "\n")
+
+def run_simulation(sim_type):
+    """Run different types of simulations"""
+    
+    log_event("=== LIVE TRADING SIMULATION STARTED ===")
+    log_event(f"Simulation type: {sim_type}")
+    log_event("Using live market data via web search and MCP tools")
+    
+    if sim_type == "morning":
+        print("🌅 MORNING BRIEF SIMULATION")
+        print("=" * 40)
+        print("This simulation will:")
+        print("• Use web search for current market data")
+        print("• Analyze real overnight market moves") 
+        print("• Review actual news and earnings")
+        print("• Generate authentic trading recommendations")
+        print()
+        print("Watch live activity: /logs view simulation")
+        print()
+        
+        # Use Task tool to run morning brief with live data
+        print("Starting pre-market analysis with live data...")
+        log_event("Initiating morning brief sequence")
+        
+        # This will be handled by Claude Code's Task tool with live agents
+        print("""
+Use the Task tool with subagent_type="portfolio" to run morning brief simulation:
+
+Task: Run comprehensive morning brief simulation using live market data
+
+Instructions:
+1. Start with current market conditions using web search
+2. Chain through all agents (risk→fundamentals→technicals→quant→sentiment→portfolio)  
+3. Each agent should:
+   - Use web search for current market data
+   - Reference real overnight moves and news
+   - Provide realistic analysis based on actual conditions
+   - Generate structured markdown reports
+4. Log all activities to simulation.log
+5. Provide final trading recommendations
+
+Context: Simulating realistic hedge fund morning brief with $50M portfolio
+""")
+        
+    elif sim_type == "event":
+        print("🚨 MARKET EVENT SIMULATION")
+        print("=" * 30)
+        print("Simulating rapid response to market event...")
+        print()
+        
+        log_event("Market event simulation initiated")
+        
+        print("""
+Use the Task tool with subagent_type="risk" to simulate market event response:
+
+Task: Analyze current market volatility and provide rapid risk assessment
+
+Instructions:
+1. Use web search to identify current market conditions
+2. Focus on:
+   - VIX levels and volatility
+   - Major index movements  
+   - Sector rotations
+   - News driving markets
+3. Chain to technicals and portfolio agents for response
+4. Provide immediate risk mitigation recommendations
+5. Log all analysis to simulation.log
+
+Context: Rapid response to live market conditions
+""")
+    
+    elif sim_type == "tech":
+        print("📈 TECHNICAL ANALYSIS SIMULATION")  
+        print("=" * 35)
+        
+        log_event("Technical analysis simulation started")
+        
+        print("""
+Use the Task tool with subagent_type="technicals" to run technical simulation:
+
+Task: Analyze current technical setup for major indices and our positions
+
+Instructions:
+1. Use web search for current price levels of SPY, QQQ, major stocks
+2. Identify key support/resistance levels
+3. Analyze momentum and indicators
+4. Look for breakout/breakdown setups
+5. Provide specific trading recommendations
+6. Log all analysis to simulation.log
+
+Context: Technical analysis of current market with trading recommendations
+""")
+        
+    else:
+        print(f"❌ Unknown simulation type: {sim_type}")
+        return
+    
+    log_event(f"{sim_type.title()} simulation framework launched")
+    log_event("Use Task tool commands above to execute simulation")
+
+def main():
+    if len(sys.argv) < 2:
+        print("⚡ Quick Trading Simulations")
+        print("=" * 30)
+        print("Available simulations:")
+        print("  /sim morning    - Morning brief with live data")
+        print("  /sim event      - Market event response")  
+        print("  /sim tech       - Technical analysis")
+        print()
+        print("After running simulation:")
+        print("  /logs view simulation  # Watch live activity")
+        print("  /statusline           # Check current status")
+        print()
+        print("These simulations use:")
+        print("• Live web search for market data")
+        print("• Real market conditions and news")
+        print("• MCP tools when available")
+        print("• Authentic hedge fund workflows")
+        return
+    
+    sim_type = sys.argv[1].lower()
+    run_simulation(sim_type)
+
+if __name__ == "__main__":
+    main()

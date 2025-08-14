@@ -1,0 +1,242 @@
+#!/usr/bin/env python3
+"""
+Run realistic trading simulation using live data from MCP tools and web search
+
+---
+description: Run full trading day simulation with live market data
+---
+"""
+
+import sys
+import time
+import subprocess
+from datetime import datetime, timedelta
+from pathlib import Path
+
+class TradingSimulation:
+    def __init__(self):
+        self.claude_dir = Path(".claude")
+        self.logs_dir = self.claude_dir / "logs"
+        self.logs_dir.mkdir(exist_ok=True)
+        
+        # Simulation scenarios
+        self.scenarios = {
+            "morning": "Full pre-market analysis with live data",
+            "intraday": "Real-time market monitoring simulation", 
+            "eod": "End-of-day review with actual performance data",
+            "full_day": "Complete trading day from pre-market to close",
+            "crisis": "Market stress scenario simulation",
+            "earnings": "Earnings season trading simulation"
+        }
+    
+    def log_simulation_event(self, log_name, message, level="INFO"):
+        """Log simulation events with timestamps"""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"{timestamp} - {level} - {message}"
+        
+        log_file = self.logs_dir / f"{log_name}.log"
+        with open(log_file, "a") as f:
+            f.write(log_entry + "\n")
+        
+        # Also print to console
+        print(log_entry)
+    
+    def run_agent_with_live_data(self, agent_name, query, log_name):
+        """Run agent with live market data and log results"""
+        self.log_simulation_event(log_name, f"Starting {agent_name} analysis: {query}")
+        
+        # Create Claude Code command with live data request
+        command = [
+            "claude", "code",
+            "--directory", str(Path.cwd()),
+            "--message", f"Use agent {agent_name} to analyze: {query}.\n\nInstructions:\n- Use web search to get current market data\n- Reference real market conditions and news\n- Use MCP tools if available for live data\n- Provide realistic analysis based on actual market state\n- Log your findings in structured format"
+        ]
+        
+        try:
+            self.log_simulation_event(log_name, f"Executing {agent_name} with live data query")
+            
+            # Execute the command and capture output
+            process = subprocess.Popen(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                cwd=Path.cwd()
+            )
+            
+            # Log that we're waiting for agent response
+            self.log_simulation_event(log_name, f"Waiting for {agent_name} response...")
+            
+            # Wait for completion with timeout
+            try:
+                stdout, stderr = process.communicate(timeout=120)  # 2 minute timeout
+                
+                if process.returncode == 0:
+                    self.log_simulation_event(log_name, f"{agent_name} analysis completed successfully")
+                    # Log key parts of the response
+                    if stdout:
+                        lines = stdout.strip().split('\n')[:5]  # First 5 lines
+                        for line in lines:
+                            if line.strip():
+                                self.log_simulation_event(log_name, f"{agent_name} output: {line.strip()}")
+                else:
+                    self.log_simulation_event(log_name, f"{agent_name} analysis failed", "ERROR")
+                    if stderr:
+                        self.log_simulation_event(log_name, f"Error: {stderr.strip()}", "ERROR")
+                        
+            except subprocess.TimeoutExpired:
+                process.kill()
+                self.log_simulation_event(log_name, f"{agent_name} analysis timed out", "WARNING")
+                
+        except Exception as e:
+            self.log_simulation_event(log_name, f"Failed to execute {agent_name}: {str(e)}", "ERROR")
+    
+    def simulate_morning_brief(self):
+        """Simulate morning brief with live market data"""
+        print("🌅 Starting Live Market Simulation - Morning Brief")
+        print("=" * 60)
+        
+        log_name = "simulation_morning"
+        
+        self.log_simulation_event(log_name, "=== MORNING BRIEF SIMULATION STARTED ===")
+        self.log_simulation_event(log_name, "Using live market data and web search")
+        
+        # Simulate the morning brief sequence with live data
+        agents_sequence = [
+            ("risk", "Analyze current market risk conditions, VIX levels, and overnight moves"),
+            ("fundamentals", "Review overnight earnings, news, and economic data affecting our positions"),  
+            ("technicals", "Analyze key support/resistance levels for SPY, QQQ, and major indices"),
+            ("quant", "Review factor performance and momentum signals in current market"),
+            ("sentiment", "Analyze social media sentiment and options flow for tech stocks"),
+            ("portfolio", "Synthesize all analysis and provide trading recommendations for today")
+        ]
+        
+        for agent, query in agents_sequence:
+            print(f"\n📊 Running {agent.upper()} analysis...")
+            self.run_agent_with_live_data(agent, query, log_name)
+            time.sleep(2)  # Brief pause between agents
+        
+        self.log_simulation_event(log_name, "=== MORNING BRIEF SIMULATION COMPLETED ===")
+        print(f"\n✅ Morning brief simulation completed!")
+        print(f"📋 View live log: /logs view simulation_morning")
+        print(f"📊 Check results: tail -f .claude/logs/simulation_morning.log")
+    
+    def simulate_market_event(self, event_type="market_move"):
+        """Simulate response to live market event"""
+        print(f"🚨 Simulating Market Event Response: {event_type}")
+        print("=" * 50)
+        
+        log_name = "simulation_event"
+        
+        self.log_simulation_event(log_name, f"=== MARKET EVENT SIMULATION: {event_type.upper()} ===")
+        
+        # Different queries based on event type
+        event_queries = {
+            "market_move": "Analyze current market volatility and price action - what's driving today's moves?",
+            "fed_news": "Analyze Federal Reserve news and interest rate implications for our portfolio", 
+            "earnings": "Review latest earnings releases and their impact on tech sector positions",
+            "geopolitical": "Assess geopolitical developments and their market impact",
+            "volatility": "Analyze VIX spike and volatility regime change implications"
+        }
+        
+        query = event_queries.get(event_type, event_queries["market_move"])
+        
+        # Quick response sequence
+        response_agents = [
+            ("risk", f"{query} - Focus on risk management implications"),
+            ("technicals", f"{query} - Provide technical analysis perspective"),  
+            ("portfolio", f"{query} - Recommend immediate portfolio actions")
+        ]
+        
+        for agent, agent_query in response_agents:
+            print(f"\n⚡ {agent.upper()} rapid response...")
+            self.run_agent_with_live_data(agent, agent_query, log_name)
+            time.sleep(1)
+        
+        self.log_simulation_event(log_name, f"=== MARKET EVENT RESPONSE COMPLETED ===")
+        print(f"\n✅ Market event simulation completed!")
+        print(f"📋 View results: /logs view simulation_event")
+    
+    def simulate_full_day(self):
+        """Simulate complete trading day"""
+        print("🏛️ Starting Full Trading Day Simulation")
+        print("=" * 50)
+        
+        # This would be a longer simulation running multiple phases
+        self.simulate_morning_brief()
+        
+        print(f"\n⏰ Simulating market hours monitoring...")
+        time.sleep(3)
+        self.simulate_market_event("market_move")
+        
+        print(f"\n🌆 Simulating end-of-day review...")
+        time.sleep(2)
+        self.simulate_eod_review()
+    
+    def simulate_eod_review(self):
+        """Simulate end-of-day review with performance analysis"""
+        print("🌆 Starting End-of-Day Review Simulation")
+        print("=" * 45)
+        
+        log_name = "simulation_eod"
+        
+        self.log_simulation_event(log_name, "=== EOD REVIEW SIMULATION STARTED ===")
+        
+        eod_sequence = [
+            ("portfolio", "Review today's portfolio performance and P&L attribution"),
+            ("risk", "Update risk metrics and assess overnight exposures"), 
+            ("technicals", "Analyze how key levels performed and set tomorrow's levels"),
+            ("fundamentals", "Review any fundamental developments and update theses"),
+            ("quant", "Perform quantitative attribution analysis of today's returns")
+        ]
+        
+        for agent, query in eod_sequence:
+            print(f"\n📊 {agent.upper()} EOD analysis...")
+            self.run_agent_with_live_data(agent, query, log_name)
+            time.sleep(2)
+        
+        self.log_simulation_event(log_name, "=== EOD REVIEW SIMULATION COMPLETED ===")
+        print(f"\n✅ EOD review simulation completed!")
+        print(f"📋 View results: /logs view simulation_eod")
+
+def main():
+    simulator = TradingSimulation()
+    
+    if len(sys.argv) < 2:
+        print("🎯 Trading Simulation Commands")
+        print("=" * 35)
+        print("Available simulations:")
+        for scenario, description in simulator.scenarios.items():
+            print(f"  /simulate {scenario:<12} - {description}")
+        print()
+        print("Examples:")
+        print("  /simulate morning     # Run morning brief with live data")
+        print("  /simulate event       # Simulate market event response") 
+        print("  /simulate full_day    # Complete trading day simulation")
+        print()
+        print("During simulation:")
+        print("  /logs view simulation_morning  # Watch live activity")
+        print("  /logs view simulation_event    # Monitor event response")
+        return
+    
+    scenario = sys.argv[1].lower()
+    
+    if scenario in ["morning", "brief"]:
+        simulator.simulate_morning_brief()
+    
+    elif scenario in ["event", "crisis", "intraday"]:
+        event_type = sys.argv[2] if len(sys.argv) > 2 else "market_move"
+        simulator.simulate_market_event(event_type)
+    
+    elif scenario == "eod":
+        simulator.simulate_eod_review()
+    
+    elif scenario == "full_day":
+        simulator.simulate_full_day()
+    
+    else:
+        print(f"❌ Unknown simulation: {scenario}")
+        print(f"Available: {list(simulator.scenarios.keys())}")
+
+if __name__ == "__main__":
+    main()
