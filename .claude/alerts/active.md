@@ -1,6 +1,6 @@
 # Active Alerts
 
-*Last Updated: 2024-01-15 05:30 ET*
+*Last Updated: 2025-08-14 17:30 ET*
 
 ## 🚨 Critical Alerts
 
@@ -8,25 +8,25 @@
 
 ## ⚠️ Warnings
 
-### Risk Alerts
-- **NVDA Concentration**: 8.5% of NAV approaching 10% limit
-- **Tech Sector**: 28.3% allocation approaching 30% limit
-- **VaR Increase**: Up 15% from Friday close due to position adds
+### Portfolio Structure Alerts
+- **CASH EXCESS**: 62.7% of NAV ($313K) - well above 15-20% target
+- **UNDERINVESTED**: Only 37% equity exposure vs 80-85% target
+- **MAPS Risk**: 4.1% speculative biotech position needs monitoring
 
 ### Technical Alerts  
 - **SPX**: Testing key resistance at 4,800 - watch for breakout
 - **QQQ**: Flag pattern completion could trigger +2% move
 
 ### Fundamental Alerts
-- **NVDA Earnings**: Jan 24th - position review recommended
-- **Sector Rotation**: Defensive sectors showing relative strength
+- **NVDA Earnings**: Upcoming earnings volatility consideration
+- **Cash Deployment**: Need systematic investment plan for excess cash
 
 ## ✅ All Clear
 
-### Margin & Liquidity
-- Margin usage: 67% (well below 80% limit)
-- Cash available: $4.2M (above $2M minimum)
-- Liquidity score: 8.2/10 (healthy)
+### Position Sizing & Risk
+- **NVDA**: 7.3% of NAV - well below 8% personal limit ✅
+- **All positions**: Under individual 8% concentration limit ✅
+- **Daily VaR**: $8.5K (1.7% NAV) - within 2% limit ✅
 
 ### Compliance
 - Position limits: All within bounds
