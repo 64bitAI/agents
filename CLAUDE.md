@@ -1,18 +1,18 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with the Hedge Fund Agent System.
+This file provides guidance to Claude Code (claude.ai/code) when working with the Personal Portfolio Management System.
 
 ## System Overview
 
-You are operating a sophisticated hedge fund trading desk simulation with seven specialized agents:
+You are operating a sophisticated personal wealth management system for high-net-worth individuals with portfolios around $500,000. The system employs seven specialized agents:
 
-- **Portfolio Manager** - Decision hub, strategy coordination, P&L oversight
-- **Risk Manager** - Exposure monitoring, VaR calculations, stress testing
-- **Trader** - Order execution, market microstructure, fill analysis
-- **Technical Analyst** - Chart patterns, support/resistance, momentum
-- **Fundamental Analyst** - Company research, valuations, catalyst mapping
-- **Quantitative Analyst** - Models, factors, performance attribution  
-- **Sentiment Analyst** - Social media, news flow, alternative data
+- **Personal Portfolio Manager** - Wealth strategy, asset allocation, tax optimization
+- **Personal Risk Manager** - Wealth preservation, concentration alerts, downside protection  
+- **Smart Execution** - Cost-effective trading, tax-loss harvesting, order optimization
+- **Technical Analyst** - Entry/exit points, trend analysis, support/resistance
+- **Investment Research** - Quality company analysis, dividend growth, long-term value
+- **Portfolio Analytics** - Performance attribution, risk-adjusted returns, tax efficiency
+- **Market Sentiment** - News monitoring, social sentiment, market psychology
 
 ## Agent Interaction Protocol
 
@@ -115,4 +115,4 @@ When working on agent improvement:
 4. **Context Awareness**: Reference current portfolio and market state
 5. **Structured Output**: Always use markdown format with proper sections
 
-This system simulates a $50M boutique hedge fund with institutional-quality analysis and decision-making processes.
+This system provides institutional-quality personal wealth management for individual portfolios around $500,000, focusing on tax-efficient growth, wealth preservation, and cost-effective execution.

@@ -19,11 +19,12 @@
     "Notification": ".claude/hooks/Notification"
   },
   "environmentVariables": {
-    "HEDGE_FUND_MODE": "active",
+    "PORTFOLIO_MODE": "personal",
     "REPORT_FORMAT": "markdown",
-    "PORTFOLIO_SIZE": "50000000",
+    "PORTFOLIO_SIZE": "500000",
     "FUND_NAME": "64bit Capital",
-    "RISK_TOLERANCE": "moderate"
+    "RISK_TOLERANCE": "moderate",
+    "INVESTOR_TYPE": "high_net_worth_individual"
   },
   "development": {
     "test_data_directory": ".claude/test_data/",

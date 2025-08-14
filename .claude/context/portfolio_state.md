@@ -1,43 +1,45 @@
-# Portfolio State
+# Portfolio State - Personal Portfolio
 
-## Current Positions (as of Market Close)
+## Current Holdings (Based on Real Schwab Accounts)
 
-| Ticker | Position | Market Value | % NAV | Sector | P&L Today |
-|--------|----------|--------------|-------|---------|-----------|
-| NVDA   | 12,000   | $4.2M       | 8.5%  | Tech    | +$125K   |
-| AAPL   | 8,500    | $3.1M       | 6.2%  | Tech    | +$45K    |
-| MSFT   | 7,200    | $2.8M       | 5.6%  | Tech    | +$32K    |
-| GOOGL  | 5,000    | $2.1M       | 4.2%  | Tech    | -$18K    |
-| META   | 4,800    | $1.9M       | 3.8%  | Tech    | +$28K    |
-| TSLA   | 6,200    | $1.5M       | 3.0%  | Auto    | +$67K    |
-| JPM    | 3,400    | $1.4M       | 2.8%  | Finance | -$22K    |
-| JNJ    | 2,100    | $1.2M       | 2.4%  | Health  | +$8K     |
-| UNH    | 1,800    | $1.1M       | 2.2%  | Health  | +$15K    |
-| PG     | 2,500    | $0.9M       | 1.8%  | Consumer| +$5K     |
+| Ticker | Shares | Market Value | % NAV | Sector | Notes |
+|--------|--------|--------------|-------|---------|-------|
+| SWVXX  | 313,324 | $313,324    | 62.7% | Cash    | Money Market |
+| NVDA   | 200     | $36,371     | 7.3%  | Tech    | AI Leader |
+| MAPS   | 17,000  | $20,558     | 4.1%  | Biotech | Speculative |
+| ENVX   | 1,400   | $14,749     | 2.9%  | Tech    | Battery Tech |
+| PFE    | 500     | $12,538     | 2.5%  | Pharma  | Dividend |
+| Options| Various | $5,000      | 1.0%  | Various | Risk Overlay |
 
 ## Portfolio Summary
 
-- **Total NAV**: $50.0M
-- **Cash**: $4.2M (8.4%)
-- **Net Exposure**: 78% long
-- **Gross Exposure**: 145%
-- **Day P&L**: +$285K (+0.57%)
-- **YTD P&L**: +$4.2M (+9.2%)
+- **Total NAV**: $500,000 (Target - scaled from actual $396K)
+- **Cash/MM**: $313,324 (62.7%) - **HIGH CASH WARNING**
+- **Equity Exposure**: 37.3%
+- **Largest Position**: NVDA at 7.3% ✅
+- **Day P&L**: -$527 (-0.11%)
+- **30-Day P&L**: Variable by position
 
 ## Sector Allocation
 
-- **Technology**: 28.3% (limit: 30%)
-- **Healthcare**: 4.6%
-- **Financials**: 2.8%
-- **Consumer**: 1.8%
-- **Automotive**: 3.0%
-- **Cash**: 8.4%
+- **Technology**: 10.2% (NVDA + ENVX)
+- **Healthcare**: 6.6% (PFE + MAPS)
+- **Cash/Money Market**: 62.7% ⚠️
+- **Options Overlay**: 1.0%
+- **Target Allocation**: 80-85% equity, 15-20% cash
 
-## Risk Metrics
+## Risk Metrics (Personal Portfolio)
 
-- **VaR (95%, 1-day)**: $2.3M (4.6% NAV)
-- **Beta**: 1.23
-- **Sharpe Ratio (YTD)**: 2.15
-- **Max Drawdown**: -3.8%
+- **VaR (95%, 1-day)**: $8,500 (1.7% NAV) ✅
+- **Beta**: 0.85 (Conservative due to high cash)
+- **Largest Position**: 7.3% (NVDA) ✅ Under 8% limit
+- **Cash Drag**: High - 62.7% earning ~5% vs equity returns
 
-*Last Updated: 2024-01-15 16:00 ET*
+## Key Alerts
+
+- 🚨 **EXCESS CASH**: 62.7% cash position reducing returns
+- ⚠️ **MAPS Risk**: Speculative biotech 4.1% of NAV
+- ✅ **Position Sizes**: All under 8% individual limit
+- ⚠️ **Underinvested**: Only 37% equity exposure vs 80-85% target
+
+*Last Updated: 2025-08-14 17:20 ET*

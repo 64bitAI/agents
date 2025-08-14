@@ -1,7 +1,12 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(compgen -c)",
+      "Bash(git add:*)"
+    ],
+    "defaultMode": "acceptEdits",
     "write": "ask-if-multi",
-    "bash": "ask-for-commands", 
+    "bash": "ask-for-commands",
     "edit": "allow"
   }
 }
