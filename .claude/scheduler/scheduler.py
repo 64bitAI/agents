@@ -26,7 +26,8 @@ class CrossPlatformScheduler:
             "midday_check": "12:00",    # Midday risk/P&L check
             "market_close": "16:00",    # Market close actions
             "post_market": "16:30",     # EOD review
-            "overnight": "18:00"        # Overnight prep
+            "overnight": "18:00",       # Overnight prep
+            "log_maintenance": "02:00"  # Daily log cleanup (2 AM)
         }
         
         # Commands for each schedule
@@ -36,7 +37,8 @@ class CrossPlatformScheduler:
             "midday_check": "claude code --directory '{}' --message '/risk \"midday check\" && /portfolio \"midday update\"'",
             "market_close": "claude code --directory '{}' --message '/trader \"close positions as needed\" && /risk \"market close update\"'",
             "post_market": "claude code --directory '{}' --message '/eod'",
-            "overnight": "claude code --directory '{}' --message '/portfolio \"overnight review\" && echo \"post-market\" > .claude/context/market_session'"
+            "overnight": "claude code --directory '{}' --message '/portfolio \"overnight review\" && echo \"post-market\" > .claude/context/market_session'",
+            "log_maintenance": "python3 '{}/.claude/scheduler/log_manager.py' cleanup"
         }
     
     def get_current_directory(self):
