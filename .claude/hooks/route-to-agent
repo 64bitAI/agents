@@ -1,0 +1,23 @@
+#!/bin/bash
+# Route to Agent Hook - handles UserPromptSubmit events
+# Routes user prompts to appropriate agents based on context
+
+USER_INPUT="$1"
+LOG_FILE=".claude/logs/route-to-agent.log"
+
+# Log the routing attempt
+mkdir -p "$(dirname "$LOG_FILE")"
+echo "$(date): Processing user input for routing" >> "$LOG_FILE"
+
+# Simple routing logic based on keywords
+if [[ "$USER_INPUT" == *"/morning"* ]] || [[ "$USER_INPUT" == *"morning brief"* ]]; then
+    echo "Routing to morning brief sequence"
+elif [[ "$USER_INPUT" == *"/eod"* ]] || [[ "$USER_INPUT" == *"end of day"* ]]; then
+    echo "Routing to end-of-day sequence"
+elif [[ "$USER_INPUT" == *"/portfolio"* ]]; then
+    echo "Routing to Portfolio Manager"
+elif [[ "$USER_INPUT" == *"/risk"* ]]; then
+    echo "Routing to Risk Manager"
+else
+    echo "Using default routing"
+fi

@@ -11,69 +11,124 @@ echo ""
 echo "pre-market" > .claude/context/market_session
 
 echo "📊 Step 1/6: Risk Manager Assessment..."
-# Invoke risk agent with morning brief context
-Use agent risk to provide morning risk assessment.
-
-Context:
-- Review overnight portfolio changes
-- Check margin and exposure limits  
-- Assess any overnight market moves impact
-- Identify key risk factors for the day
+echo ""
+echo "Use agent risk with the following context:"
+echo ""
+echo "Morning Risk Assessment Request:"
+echo ""
+echo "Context for Risk Manager:"
+echo "- Review overnight portfolio changes and positions"
+echo "- Check current margin usage and exposure limits compliance"
+echo "- Assess impact of any overnight market moves on our portfolio"
+echo "- Calculate updated VaR and stress test scenarios"
+echo "- Identify key risk factors and potential concerns for today"
+echo "- Reference current portfolio state (@.claude/context/portfolio_state.md)"
+echo "- Consider market conditions (@.claude/context/market_conditions.md)"
+echo "- Review active alerts (@.claude/alerts/active.md)"
+echo "- Provide structured markdown report with risk metrics and recommendations"
+echo ""
+echo "---"
 
 echo ""
 echo "📈 Step 2/6: Fundamental Analysis Update..."
-# Invoke fundamentals agent
-Use agent fundamentals to provide morning fundamental update.
-
-Context:  
-- Scan overnight news affecting our positions
-- Review any earnings or catalyst updates
-- Check analyst recommendations changes
-- Identify fundamental themes for the day
+echo ""
+echo "Use agent fundamentals with the following context:"
+echo ""
+echo "Morning Fundamental Analysis Request:"
+echo ""
+echo "Context for Fundamental Analyst:"
+echo "- Scan overnight news and developments affecting our current positions"
+echo "- Review any earnings releases, guidance updates, or catalyst events"
+echo "- Check for analyst recommendation changes or target price updates"
+echo "- Identify key fundamental themes and narratives for today's trading"
+echo "- Assess economic data releases and their potential market impact"
+echo "- Reference current portfolio state (@.claude/context/portfolio_state.md)"
+echo "- Consider market conditions (@.claude/context/market_conditions.md)"
+echo "- Review active alerts (@.claude/alerts/active.md)"
+echo "- Provide structured markdown report with fundamental insights and recommendations"
+echo ""
+echo "---"
 
 echo ""
 echo "📉 Step 3/6: Technical Analysis Setup..."
-# Invoke technicals agent
-Use agent technicals to provide morning technical setup.
-
-Context:
-- Identify key support/resistance levels
-- Scan for breakout setups in our watchlist
-- Review overnight futures action impact
-- Set technical alerts for the day
+echo ""
+echo "Use agent technicals with the following context:"
+echo ""
+echo "Morning Technical Analysis Request:"
+echo ""
+echo "Context for Technical Analyst:"
+echo "- Identify key support and resistance levels for our current positions"
+echo "- Scan for breakout setups and technical patterns in our watchlist"
+echo "- Review overnight futures action and its impact on key levels"
+echo "- Set up technical alerts and monitoring points for the trading day"
+echo "- Assess momentum indicators and volume patterns"
+echo "- Reference current portfolio state (@.claude/context/portfolio_state.md)"
+echo "- Consider market conditions (@.claude/context/market_conditions.md)"
+echo "- Review active alerts (@.claude/alerts/active.md)"
+echo "- Provide structured markdown report with technical levels and trade setups"
+echo ""
+echo "---"
 
 echo ""
 echo "🔢 Step 4/6: Quantitative Signals..."
-# Invoke quant agent  
-Use agent quant to provide morning quantitative update.
-
-Context:
-- Update factor model signals
-- Review momentum and mean reversion signals
-- Check correlation and volatility regime
-- Validate current positioning vs signals
+echo ""
+echo "Use agent quant with the following context:"
+echo ""
+echo "Morning Quantitative Analysis Request:"
+echo ""
+echo "Context for Quantitative Analyst:"
+echo "- Update all factor model signals and regime indicators"
+echo "- Review momentum and mean reversion signals across our universe"
+echo "- Check current correlation matrix and volatility regime status"
+echo "- Validate our current positioning against systematic signals"
+echo "- Run portfolio optimization and factor exposure analysis"
+echo "- Reference current portfolio state (@.claude/context/portfolio_state.md)"
+echo "- Consider market conditions (@.claude/context/market_conditions.md)"
+echo "- Review active alerts (@.claude/alerts/active.md)"
+echo "- Provide structured markdown report with quantitative insights and signals"
+echo ""
+echo "---"
 
 echo ""
 echo "📱 Step 5/6: Sentiment Analysis..."
-# Invoke sentiment agent
-Use agent sentiment to provide morning sentiment reading.
-
-Context:
-- Scan social media sentiment on our positions
-- Review news flow sentiment
-- Check options flow and positioning data
-- Identify sentiment-driven opportunities/risks
+echo ""
+echo "Use agent sentiment with the following context:"
+echo ""
+echo "Morning Sentiment Analysis Request:"
+echo ""
+echo "Context for Sentiment Analyst:"
+echo "- Scan social media sentiment and chatter on our current positions"
+echo "- Review overall news flow sentiment and narrative themes"
+echo "- Check options flow, positioning data, and market sentiment indicators"
+echo "- Identify sentiment-driven opportunities and potential risks"
+echo "- Analyze retail vs institutional sentiment divergences"
+echo "- Reference current portfolio state (@.claude/context/portfolio_state.md)"
+echo "- Consider market conditions (@.claude/context/market_conditions.md)"
+echo "- Review active alerts (@.claude/alerts/active.md)"
+echo "- Provide structured markdown report with sentiment insights and alerts"
+echo ""
+echo "---"
 
 echo ""
 echo "🎯 Step 6/6: Portfolio Manager Synthesis..."
-# Invoke portfolio agent with all contexts
-Use agent portfolio to synthesize morning brief and set trading plan.
-
-Context:
-- Review all agent inputs from morning brief
-- Set day's trading priorities and risk budget
-- Identify key decisions needed today
-- Communicate plan to trading desk
+echo ""
+echo "Use agent portfolio with the following context:"
+echo ""
+echo "Morning Portfolio Management Synthesis:"
+echo ""
+echo "Context for Portfolio Manager:"
+echo "- Review and synthesize ALL agent inputs from the morning brief above"
+echo "- Integrate risk, fundamental, technical, quantitative, and sentiment analysis"
+echo "- Set today's trading priorities and allocate risk budget"
+echo "- Identify key decisions and trades needed today"
+echo "- Develop actionable trading plan and communicate priorities"
+echo "- Consider portfolio optimization and rebalancing opportunities"
+echo "- Reference current portfolio state (@.claude/context/portfolio_state.md)"
+echo "- Consider market conditions (@.claude/context/market_conditions.md)"
+echo "- Review active alerts (@.claude/alerts/active.md)"
+echo "- Provide comprehensive structured markdown report with trading plan"
+echo ""
+echo "---"
 
 echo ""
 echo "✅ Morning Brief Complete"

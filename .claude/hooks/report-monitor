@@ -1,0 +1,23 @@
+#!/bin/bash
+# Report Monitor Hook - handles Write/Edit events for reports
+# Monitors and logs report generation and updates
+
+# Get the file path from the first argument
+FILE_PATH="$1"
+ACTION="$2"
+
+# Log the report activity
+LOG_FILE=".claude/logs/report-monitor.log"
+mkdir -p "$(dirname "$LOG_FILE")"
+echo "$(date): $ACTION on $FILE_PATH" >> "$LOG_FILE"
+
+# Check if this is a report file
+if [[ "$FILE_PATH" == *"/reports/"* ]] || [[ "$FILE_PATH" == *.md ]]; then
+    echo "Report monitor: Tracking $ACTION on report file $FILE_PATH"
+    
+    # Update report index if needed
+    if [[ -f ".claude/temp/report_index.json" ]]; then
+        # Could update report tracking here
+        echo "Updating report index for $FILE_PATH"
+    fi
+fi

@@ -1,9 +1,7 @@
 {
   "permissions": {
-    "allow": [
-      "WebFetch(domain:docs.anthropic.com)"
-    ],
-    "deny": [],
-    "ask": []
+    "write": "ask-if-multi",
+    "bash": "ask-for-commands", 
+    "edit": "allow"
   }
 }

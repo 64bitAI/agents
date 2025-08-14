@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""
+Portfolio Manager interface - Main decision-making hub
+Usage: /portfolio [message]
+
+---
+description: Chat with Portfolio Manager - Main decision-making hub
+---
+"""
+
+import sys
+from datetime import datetime
+
+def main():
+    # Get current market session
+    try:
+        with open('.claude/context/market_session', 'r') as f:
+            market_session = f.read().strip()
+    except FileNotFoundError:
+        market_session = "unknown"
+    
+    # Build context message
+    if len(sys.argv) > 1:
+        user_query = ' '.join(sys.argv[1:])
+    else:
+        user_query = "Please provide your current market assessment and any recommended actions."
+    
+    print(f"🎯 Portfolio Manager Consultation")
+    print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M ET')}")
+    print(f"Market Session: {market_session}")
+    print(f"Query: {user_query}")
+    print("=" * 60)
+    print("")
+
+    # Invoke the specialized portfolio agent
+    print("Consulting Portfolio Manager...")
+    print("")
+    
+    # This will trigger Claude Code to use the Task tool with the portfolio agent
+    print("Use agent portfolio with the following context:")
+    print("")
+    print(f"Query: {user_query}")
+    print("")
+    print("Additional Context:")
+    print("- Review current portfolio state from @.claude/context/portfolio_state.md")
+    print("- Consider current market conditions from @.claude/context/market_conditions.md") 
+    print("- Check any active alerts from @.claude/alerts/active.md")
+    print(f"- Current market session: {market_session}")
+    print("- Provide strategic insights and actionable recommendations")
+    print("- Use your structured markdown report format")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,12 @@
+#!/bin/bash
+# Agent Orchestrator Hook - handles SubagentStop events
+# Coordinates agent interactions and maintains state
+
+# Log the agent stop event
+echo "$(date): Agent stopped: $1" >> .claude/logs/agent-orchestrator.log
+
+# Update agent status if needed
+if [[ -f ".claude/temp/statusline_state.json" ]]; then
+    # Agent-specific cleanup or status updates could go here
+    echo "Agent orchestrator: Handling stop for $1"
+fi

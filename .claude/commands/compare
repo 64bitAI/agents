@@ -36,38 +36,47 @@ def main():
     
     results = {}
     
-    for agent in agents:
-        print(f"\n📊 {agent.upper()} Analysis:")
-        print("-" * 30)
+    for i, agent in enumerate(agents, 1):
+        print(f"\n📊 Agent {i}/{len(agents)}: {agent.upper()} Analysis")
+        print("-" * 40)
         
-        # Use the Task tool to invoke the agent
-        print(f"Use agent {agent} to analyze: {query}")
+        agent_context = f"""
+Query: {query}
+
+Context for {agent} agent:
+- Provide your specialized {agent} analysis of the above query
+- Reference current portfolio state (@.claude/context/portfolio_state.md)
+- Consider current market conditions (@.claude/context/market_conditions.md)
+- Check active alerts (@.claude/alerts/active.md)
+- Include your specialized perspective and expertise
+- Note any risks or opportunities you identify
+- Use your structured markdown report format
+- This is part of a multi-agent comparison, so be concise but comprehensive
+        """
+        
+        print(f"Use agent {agent} with the following context:")
+        print(agent_context)
         print("")
-        print("Context:")
-        print("- Provide your analysis of the above query")
-        print("- Reference current portfolio and market conditions")
-        print("- Include your specialized perspective")
-        print("- Note any risks or opportunities you identify")
+        print("---")
         print("")
         
-        # Note: In a real implementation, you'd capture the agent response
-        # and store it in results[agent] for comparison
-        
-    # Summary comparison (would be implemented with actual agent responses)
-    print(f"\n🎯 COMPARISON SUMMARY")
-    print("=" * 30)
-    print(f"Query: {query}")
-    print(f"Agents Consulted: {len(agents)}")
+    print(f"\n🎯 COMPARISON SYNTHESIS")
+    print("=" * 40)
     print("")
-    print("Key Themes:")
-    print("- [Would extract common themes from responses]")
-    print("- [Would identify areas of agreement]")
-    print("- [Would highlight disagreements]")
+    print("After reviewing all agent responses above, please:")
     print("")
-    print("Recommended Action:")
-    print("- [Would synthesize recommendations]")
+    print("1. **Identify Common Themes**: What do most agents agree on?")
+    print("2. **Highlight Disagreements**: Where do agents have different views?")
+    print("3. **Synthesize Insights**: What's the combined perspective?") 
+    print("4. **Recommended Actions**: What should we do based on all inputs?")
     print("")
-    print("💡 Use /portfolio to discuss these findings with the PM")
+    print(f"Query analyzed: {query}")
+    print(f"Agents consulted: {', '.join(agents)}")
+    print("")
+    print("💡 Next steps:")
+    print("  - Use /portfolio to discuss synthesis with Portfolio Manager")
+    print("  - Consider /chain for deeper analysis between specific agents")
+    print("  - Use /alerts to monitor any new developments")
 
 if __name__ == "__main__":
     main()

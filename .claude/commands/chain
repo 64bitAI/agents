@@ -58,53 +58,56 @@ class AgentChain:
         # Step 1: Run origin agent
         print(f"\n📊 Step 1: {origin.upper()} Analysis")
         print("-" * 40)
-        print(f"Use agent {origin} to analyze: {query}")
-        print("")
-        print("Context:")
-        print("- Provide your initial analysis of the query")
-        print("- Reference current portfolio and market conditions") 
-        print("- Include your specialized perspective")
-        print("- Use structured markdown output format")
-        print("")
-        print("[ORIGIN AGENT OUTPUT WOULD APPEAR HERE]")
         
-        # In a real implementation, you'd capture the actual agent output
-        mock_origin_output = f"""
----
-agent: {origin}
-timestamp: {datetime.now().isoformat()}
-period: intraday
-priority: medium
----
+        # Actually invoke the origin agent using Task tool
+        origin_context = f"""
+Query: {query}
 
-# {origin.title()} Analysis: {query}
-
-## Key Findings
-- Analysis from {origin} perspective
-- Relevant metrics and observations
-- Risk/opportunity identification
-
-## Recommendations
-- Specific actionable insights
-- Considerations for other agents
+Context for {origin} agent:
+- Provide your analysis of the above query
+- Reference current portfolio state (@.claude/context/portfolio_state.md)
+- Consider current market conditions (@.claude/context/market_conditions.md)
+- Check active alerts (@.claude/alerts/active.md)
+- Use your structured markdown report format
+- Focus on insights relevant to passing to {target} agent
         """
+        
+        print(f"Use agent {origin} with the following context:")
+        print(origin_context)
+        print("")
+        print("Please provide your analysis, then I will pass it to the target agent.")
+        print("")
+        print("---")
+        print("")
+        print("After receiving the origin agent's response, continue below:")
+        print("")
+        
+        # Placeholder for origin output - in practice this would be captured
+        mock_origin_output = "[ORIGIN AGENT RESPONSE WILL BE CAPTURED HERE]"
         
         # Step 2: Pass to target agent
         print(f"\n🎯 Step 2: {target.upper()} Analysis")
         print("-" * 40)
-        print(f"Use agent {target} to build on the {origin} analysis.")
-        print("")
-        print("Context:")
-        print(f"- Original query: {query}")
-        print(f"- Previous analysis from {origin} agent:")
-        print(f"  {mock_origin_output.strip()}")
-        print("")
-        print("Instructions:")
-        print(f"- Review the {origin} agent's analysis above")
-        print("- Add your specialized perspective")
-        print("- Note areas of agreement or disagreement")
-        print("- Provide combined insights and recommendations")
-        print("- Use structured markdown output format")
+        
+        target_context = f"""
+Original query: {query}
+
+Previous analysis from {origin} agent:
+{mock_origin_output}
+
+Context for {target} agent:
+- Review the {origin} agent's analysis above
+- Add your specialized {target} perspective to the query
+- Reference current portfolio state (@.claude/context/portfolio_state.md)
+- Consider current market conditions (@.claude/context/market_conditions.md)
+- Check active alerts (@.claude/alerts/active.md)
+- Note areas where you agree or disagree with the {origin} analysis
+- Provide combined insights and recommendations
+- Use your structured markdown report format
+        """
+        
+        print(f"Use agent {target} with the following context:")
+        print(target_context)
         print("")
         
         # Save chain context
