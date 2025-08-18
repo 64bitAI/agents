@@ -5,18 +5,34 @@
     "edit": "allow"
   },
   "hooks": {
-    "SubagentStop": {
-      "matchers": ["*"],
-      "command": ".claude/hooks/agent-orchestrator"
-    },
-    "PostToolUse": {
-      "Write": ".claude/hooks/report-monitor",
-      "Edit": ".claude/hooks/report-monitor"
-    },
-    "UserPromptSubmit": {
-      "command": ".claude/hooks/route-to-agent"
-    },
-    "Notification": ".claude/hooks/Notification"
+    "SubagentStop": [
+      {
+        "matcher": {"tools": ["*"]},
+        "hooks": [{"type": "command", "command": ".claude/hooks/agent-orchestrator"}]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": {"tools": ["Write"]},
+        "hooks": [{"type": "command", "command": ".claude/hooks/report-monitor"}]
+      },
+      {
+        "matcher": {"tools": ["Edit"]},
+        "hooks": [{"type": "command", "command": ".claude/hooks/report-monitor"}]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": {"tools": ["*"]},
+        "hooks": [{"type": "command", "command": ".claude/hooks/route-to-agent"}]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": {"tools": ["*"]},
+        "hooks": [{"type": "command", "command": ".claude/hooks/Notification"}]
+      }
+    ]
   },
   "environmentVariables": {
     "PORTFOLIO_MODE": "personal",

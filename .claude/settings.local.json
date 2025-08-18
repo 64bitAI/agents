@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(compgen -c)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)"
     ],
     "defaultMode": "acceptEdits",
     "write": "ask-if-multi",
