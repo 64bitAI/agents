@@ -7,29 +7,29 @@
   "hooks": {
     "SubagentStop": [
       {
-        "matcher": {"tools": ["*"]},
+        "matcher": "*",
         "hooks": [{"type": "command", "command": ".claude/hooks/agent-orchestrator"}]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": {"tools": ["Write"]},
+        "matcher": "Write",
         "hooks": [{"type": "command", "command": ".claude/hooks/report-monitor"}]
       },
       {
-        "matcher": {"tools": ["Edit"]},
+        "matcher": "Edit",
         "hooks": [{"type": "command", "command": ".claude/hooks/report-monitor"}]
       }
     ],
     "UserPromptSubmit": [
       {
-        "matcher": {"tools": ["*"]},
+        "matcher": "*",
         "hooks": [{"type": "command", "command": ".claude/hooks/route-to-agent"}]
       }
     ],
     "Notification": [
       {
-        "matcher": {"tools": ["*"]},
+        "matcher": "*",
         "hooks": [{"type": "command", "command": ".claude/hooks/Notification"}]
       }
     ]

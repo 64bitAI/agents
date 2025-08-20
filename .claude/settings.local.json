@@ -3,11 +3,19 @@
     "allow": [
       "Bash(compgen -c)",
       "Bash(git add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(env)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(claude mcp:*)"
     ],
     "defaultMode": "acceptEdits",
     "write": "ask-if-multi",
     "bash": "ask-for-commands",
     "edit": "allow"
-  }
+  },
+  "outputStyle": "concise",
+  "enabledMcpjsonServers": [
+    "schwab"
+  ],
+  "enableAllProjectMcpServers": true
 }

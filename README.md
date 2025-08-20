@@ -76,3 +76,60 @@ Each agent produces structured markdown reports and supports:
 4. Use `/help` or `/agent help` for specific guidance
 
 Built for realistic hedge fund simulation and agent development.
+
+
+## MCP Server Configuration Fix
+
+Issue
+
+Claude Code was not detecting MCP servers configured in .mcp.json because they weren't properly registered with the Claude CLI.
+
+Root Cause
+
+- Manual .mcp.json files are not automatically recognized
+- MCP servers must be explicitly added via claude mcp add commands
+- Project-scope servers may have registration issues
+
+Solution
+
+1. Add MCP Servers (Local Scope)
+
+# Schwab MCP Server
+claude mcp add schwab /usr/local/bin/schwab serve \
+-e SCHWAB_APP_KEY="[your_key]" \
+-e SCHWAB_SECRET="[your_secret]" \
+-e SCHWAB_CALLBACK_URL="https://127.0.0.1"
+
+# Financial Datasets MCP Server
+claude mcp add financial-datasets -t sse https://mcp.financialdatasets.ai/mcp \
+-e FINANCIAL_DATASETS_API_KEY="[your_api_key]"
+
+# AlphaVantage MCP Server (if needed)
+cd /path/to/alphavantage/directory
+claude mcp add alphavantage uv run alphavantage \
+-e ALPHAVANTAGE_API_KEY="[your_api_key]"
+
+2. Verify Configuration
+
+claude mcp list
+
+Expected output:
+schwab: /usr/local/bin/schwab serve - ✓ Connected
+financial-datasets: https://mcp.financialdatasets.ai/mcp (SSE) - ⚠ Needs authentication
+
+3. Authentication
+
+For SSE servers requiring auth, use:
+/mcp financial-datasets
+
+4. Restart Claude Code
+
+Restart Claude Code session to load MCP tools as available functions.
+
+Key Points
+
+- Use claude mcp add instead of manual .mcp.json editing
+- Local scope (-s local) works more reliably than project scope
+- Environment variables are set during add command
+- SSE servers need separate authentication step
+- Restart required for tools to become available

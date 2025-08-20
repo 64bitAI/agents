@@ -1,0 +1,36 @@
+{
+  "mcpServers": {
+    "schwab": {
+      "type": "stdio",
+      "command": "/usr/local/bin/schwab",
+      "args": [
+        "serve"
+      ],
+      "env": {
+        "SCHWAB_APP_KEY": "LMLWdjuUICBuWl0sGAaXAK5cY7DFv4FO",
+        "SCHWAB_SECRET": "bK5KQKSMtmK1VL4O",
+        "SCHWAB_CALLBACK_URL": "https://127.0.0.1"
+      }
+    },
+    "alphavantage": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/richard/src/github.com/calvernaz/alphavantage",
+        "run",
+        "alphavantage"
+      ],
+      "env": {
+        "ALPHAVANTAGE_API_KEY": "6IKORVSGFB3IJBFE"
+      }
+    },
+    "financial-datasets": {
+      "type": "sse",
+      "url": "https://mcp.financialdatasets.ai/mcp",
+      "env": {
+        "FINANCIAL_DATASETS_API_KEY": "a4ebb18e-c36a-41af-baa0-d707e97ac2ab"
+      }
+    }
+  }
+}
