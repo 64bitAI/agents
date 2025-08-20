@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "schwab": {
+      "type": "stdio",
+      "command": "/usr/local/bin/schwab",
+      "args": [
+        "serve"
+      ],
+      "env": {
+        "SCHWAB_APP_KEY": "LMLWdjuUICBuWl0sGAaXAK5cY7DFv4FO",
+        "SCHWAB_SECRET": "bK5KQKSMtmK1VL4O",
+        "SCHWAB_CALLBACK_URL": "https://127.0.0.1"
+      }
+    },
+    "alphavantage": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/richard/src/github.com/calvernaz/alphavantage",
+        "run",
+        "alphavantage"
+      ],
+      "env": {
+        "ALPHAVANTAGE_API_KEY": "6IKORVSGFB3IJBFE"
+      }
+    },
+    "financial-datasets": {
+      "type": "sse",
+      "url": "https://mcp.financialdatasets.ai/mcp"
+    },
+    "yahoo": {
+      "type": "stdio",
+      "command": "/Users/richard/src/github.com/64bitAI/yahoo/release/yahoo-v0.1.0-macos-arm64/yahoo",
+      "args": [],
+      "cwd": "/Users/richard/src/github.com/64bitAI/yahoo/release/yahoo-v0.1.0-macos-arm64"
+    }
+  }
+}
